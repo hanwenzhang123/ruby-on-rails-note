@@ -1,0 +1,16 @@
+Gemfile - dependencies required to execute associated Ruby code
+
+bundle install - install dependencies
+
+//run the server
+ruby script/server - (In rails 2.x)
+rails s - (In rails 3.x)
+
+
+MVC architecture - model view controller
+
+//generator
+rails g
+rails g controller home index
+
+erb - embedded ruby
