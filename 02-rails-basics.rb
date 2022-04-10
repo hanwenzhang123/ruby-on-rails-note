@@ -19,6 +19,11 @@ rails new my-app
 rails server
     
   
+# Gemfile - like package.json
+  # bundle install is like npm install
+A Gemfile is a file that is created to describe the gem dependencies required to run a Ruby program. 
+  A Gemfile should always be placed in the root of the project directory.
+     
 Gemfile - dependencies required to execute associated Ruby code
 bundle install - install dependencies
 
@@ -57,4 +62,4 @@ rails generate model Post title:string body:text
 :float - used for storing decimals, when you do not care about the precision of the number since it rounds
 :primary_key - used for storing a unique key that can uniquely identify each row in a table
 
-    
+  
