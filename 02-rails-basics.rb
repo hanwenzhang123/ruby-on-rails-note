@@ -31,7 +31,15 @@ erb - embedded ruby
 
   
 # repositories
-  app - hold the mvc, assets (images, js, stylesheets), helpers, mailers
+  app - hold the mvc, assets (images, js, stylesheets), helpers, mailers => most of time where you write your code
+    - models
+    - views
+    - controllers
+    - helpers: view helpers, helping us to write code in views
+    - assets: javascript, style sheets, some fundamentals images
+    - mailers: like have your application send emails
+    - jobs: write tasks your app do, like have your app run a certain job every night at midnight etc
+    - channels: action cabel
   bin - ruby script like bundle commands rail commands etc
   config - configuration code that your app needs (database.yml routes.rb - add new routes)
   db - for database, sqlite for default, migration, do not update schema.rv directly
