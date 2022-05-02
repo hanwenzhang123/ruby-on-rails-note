@@ -13,6 +13,10 @@ model - using singular like post
 # generate the controller
 rails g controller Posts (with the name of the controller)
 
+# show all the routes
+rake routes 
+
+
 # attends using <
 # all the controller should extends ApplicationController
 class PostsController < ApplicationController
