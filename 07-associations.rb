@@ -66,6 +66,11 @@ first_table + _ + second_table
 - no table name conventions to follow
 - names ending in "-ments" or "-ships" work well
   
+AdminUser has_many :section_edits
+SectionEdit belongs_to :admin_uer
+Section has_many :section_edits
+SectionEdit belongs_to :section
+  
   
 class CreateSectionEdits < ActiveRecord::Migration[5.0]
   def up
