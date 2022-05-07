@@ -45,10 +45,16 @@ In the routing snippet below :to => "A#B", A is controller
 A request goes to Rails routing, and routing parses the URL to determine which controller and action to use.
 The item that you can generate with the command "rails generate" is controller model helper
 Which command stops the web server? Control+C
+Which command starts the web server? rails s
 Which directory will you spend most of your time in? app
 What command should you run after changes in the Gemfile? bundle install
 What option should you use to configure the rails application to use MySQL database? -d mysql
-
+- rails new simple_cms -d mysql (specify for the use for config mysql)
+- mysql -u root -p   (config db)
+- CREATE DATABASE simple_cms_development
+- CREATE DATABASE simple_cms_test
+- GRANT ALL PRIVILEGES ON simple_cms_development.* TO "rails_user"@"localhost" IDENTIFIED BY "secretpassword"
+        
         
 # views/layouts/application.html.erb
 <body><%= yeild %></body> - all the view we create will be output at
@@ -120,8 +126,6 @@ root "posts#index"  # posts index template to be the root view, posts controller
 <h2><%= @post.title %></h2>
 <p><%= @post.body %></p>
     
-    
-    
 
 # generate the controller
 rails g controller Pages
@@ -152,6 +156,5 @@ resources :posts
 rails g model Post title:string body:text   #create a model file for us
 
 rake db: migrate    # create the table
-
 
   
