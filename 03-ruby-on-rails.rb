@@ -1,3 +1,55 @@
+rails generate controller demo index
+
+# controller/demo_controller.rb
+class DemoController < ApplicationController
+        def index
+        end
+end
+
+# views/demo/index.html.erb     
+=> folder name correspond to the controller name
+=> view template name correspond to the action
+
+# config/locales/routes.rb
+Rails.application.routes.draw do
+        get "demo/index"
+end
+# public directory
+=> will return from public directory other than going to the rail app
+
+
+# Rails Architecture
+broswer - web server - public - routing
+                 \                 |
+                  \            controller
+                   \             |   |
+                      -------- view model - database
+
+# Route Types
+- simple match route
+  get "demo/index"
+  match "demo/index", :to => "demo#index",
+    :via => :get
+- default route
+  :controller/:action/:id
+  get ":controller(/:action(/:id))"
+- root route
+  match "/", :to => "demo#index", :via => :get
+  root "demo#index"
+- resourceful routes
+
+
+When we talk about data objects, we are mostly referring to Model
+Ruby version 5 was released in 2016. Rails is a web application framework. DRY stands for Do not Repeat Yourself.
+In the routing snippet below :to => "A#B", A is controller
+A request goes to Rails routing, and routing parses the URL to determine which controller and action to use.
+The item that you can generate with the command "rails generate" is controller model helper
+Which command stops the web server? Control+C
+Which directory will you spend most of your time in? app
+What command should you run after changes in the Gemfile? bundle install
+What option should you use to configure the rails application to use MySQL database? -d mysql
+
+        
 # views/layouts/application.html.erb
 <body><%= yeild %></body> - all the view we create will be output at
         - whatever is in this file will show up on every single page
