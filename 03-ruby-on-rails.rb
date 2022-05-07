@@ -10,7 +10,7 @@ end
 => folder name correspond to the controller name
 => view template name correspond to the action
 
-# config/locales/routes.rb
+# config/routes.rb
 Rails.application.routes.draw do
         get "demo/index"
 end
