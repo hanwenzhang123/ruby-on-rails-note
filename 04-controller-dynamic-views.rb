@@ -26,9 +26,9 @@ class DemoController < ApplicationController
 end
 
 # app/views/demo/hello.html.erb
-<h1>Hello world from Hello</h1>
+# <h1>Hello world from Hello</h1>
 # views/demo/index.html.erb
-<h1>Hello world from Index</h1>
+# <h1>Hello world from Index</h1>
   
 
 # view templates
