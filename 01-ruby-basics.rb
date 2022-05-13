@@ -335,8 +335,9 @@ my_italian_chef = ItalianChef.new()
 my_italian_chef.make_chicken()
 
 
-class Person
 
+# DEV HOUR
+class Person
   def name    #getter
     @name
   end
@@ -344,86 +345,86 @@ class Person
   def name=(value)  #setter
     @name = value
   end
-
 end
 
-
 class Person
-
   attr_reader :name
   attr_writer :name
-
 end
 
-
 class Person
-
   attr_reader :name, :age, :gender
-
   def initilize(name, age, gender)
     @name = name
     @age = gender
     @gender = gender
   end
-
 end
 
 
 class Person
-
   option :name
-
 end
-
 
 class GetMemberId
-
   option :id
-
   def process
-
   return failure(data: { id: 'Id is neither Ineger not String'}) if !id.is_a?(Integer) || !id.is_a?(String)
-
-
     member = Member.find_by(id: id)
-
     if member
-
     if member.id
-
       return success(data: { id: member.id })
-
     else
-
       return error(message: 'Member is found, but he/she has no id.')
-
     end
-
     else
-
       return error(message: 'Member is not found.')
-
     end
-
   end
-
 end
-
-
-
 
 if ENV['ENABLE_ELATION'] == true
-
     do_something_related_to_elation
-
   else
-
     do_nothing
-
 end
-
 
 $rollout.activate(:enable_elation)
 $rollout.deactivate(:enable_elation)
 
  
+# DEV HOUR2
+class Person
+  param :name, :age, :gender
+end
+
+class Person
+    attr_reader :name, :age, :gender
+    def initialize(name, age, gender)
+	@name = name
+	@age = age
+	@gender = gender
+    end
+end
+
+person = Person.new('John', 42, :male)
+
+dry-initializerhttps://dry-rb.org/gems/dry-initializer/3.0/class 
+Personoption :name, :age, :genderendclass Person
+	attr_reader :name, :age, :gender
+	def initialize(name:, age:, gender:)
+		@name = name@age = age
+		@gender = gender
+	end
+end
+person = Person.new(name: 'John', age: 42, gender: :male)
+person = Person.new(age: 42, gender: :male, name: 'John')
+person = Person.new(gender: :male, name: 'John', age: 42)
+
+# SomeService.process
+class SomeService
+	def proccess
+	# your logic
+	end
+end
+  
