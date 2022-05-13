@@ -409,8 +409,14 @@ end
 
 person = Person.new('John', 42, :male)
 
-dry-initializerhttps://dry-rb.org/gems/dry-initializer/3.0/class 
-Personoption :name, :age, :genderendclass Person
+#dry-initializer
+#https://dry-rb.org/gems/dry-initializer/3.0/
+#using option for as keyword argument
+#ruby built in using positional argument
+class Person
+	option :name, :age, :gender
+end
+class Person
 	attr_reader :name, :age, :gender
 	def initialize(name:, age:, gender:)
 		@name = name@age = age
