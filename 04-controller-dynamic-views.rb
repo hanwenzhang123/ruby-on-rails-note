@@ -17,7 +17,7 @@ class DemoController < ApplicationController
     render("demo/index")
   end
   def hello
-    @array = [1, 2, 3, 4, 5]  #instance vairable
+    @array = [1, 2, 3, 4, 5]  #instance vairable - in order to be available in view and rest of application
     @id = params['id']
     @page = params[:page]
     render("demo/hello")
