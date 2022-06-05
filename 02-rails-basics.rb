@@ -17,6 +17,10 @@ rails new my-app
 
 # start the server
 rails server
+  
+# rails console
+rails c
+reload!   #reload the console
     
   
 # Gemfile - like package.json
