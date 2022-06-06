@@ -21,6 +21,9 @@ rails server
 # rails console
 rails c
 reload!   #reload the console
+  
+# check routes
+rails route --expanded
     
   
 # Gemfile - like package.json
