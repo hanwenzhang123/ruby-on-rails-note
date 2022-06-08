@@ -103,8 +103,14 @@ remove_index(table, column)
     
 # Index Migration Method Options
 :unique => true/false
-:name => "your_custom_name"
+:name => your_custom_name
     
+# db/migrate/add_user_id_to_articles.rb
+class AddUserIdToArticles < ActiveRecord::Migration[6.0]
+    def change
+      add_column :articles, :user_id, :int  #table name, field I want to add, type of the field I add
+    end
+end
     
 # Quiz 
 Which one of the following are a column migration method? add_column, rename_column, change_column
