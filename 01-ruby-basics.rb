@@ -42,9 +42,12 @@ trusy: All other values are considered "truthy", including:
 # Nil 
 nil 
 nil.class # NilClass
-
 # absence of any object (everything in Ruby is an object)
 # the element exists, it has no conten
+
+if nil   # will be false
+  puts "Hello"
+end
 
 if (nil || true)   # will be true
   puts "Hello"
