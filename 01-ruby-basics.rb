@@ -26,6 +26,35 @@ puts "Your name is #{name}"
 puts "Your name is " + name   #concat
 
 
+# Boolean
+falsy: exactly two values which are considered "falsy"
+- nil
+- boolean false
+
+trusy: All other values are considered "truthy", including:
+- 0 - numeric zero (Integer or otherwise)
+- "" - Empty strings
+- "\n" - Strings containing only whitespace
+- [] - Empty arrays
+- {} - Empty hashes
+
+
+# Nil 
+nil 
+nil.class # NilClass
+
+# absence of any object (everything in Ruby is an object)
+# the element exists, it has no conten
+
+if (nil || true)   # will be true
+  puts "Hello"
+end
+
+if (nil || true) && false  # will be false
+  puts "Hello"
+end
+
+
 # Casting and Converting
 puts  3.14.to_i  #3 - toInteger
 puts  3.to_f  #3.0 - toFloat
