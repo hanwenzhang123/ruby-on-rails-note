@@ -322,6 +322,10 @@ book1 = Book.new("Harry Potter", "JK Rowling")
 
 puts book1.title
 
+# attr_accessor - setter
+# attr_reader - getter
+# initialize - constructor
+
 
 # Inheritance
 class Chef
