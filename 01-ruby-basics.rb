@@ -212,7 +212,7 @@ test_grades = {
 
 test_grades["Andy"] = "B-"    # modify the value
 puts test_grades["Andy"]
-puts test_grades[:Stanley]
+puts test_grades[:Stanley]	# Symbol is not string but represents an identity
 puts test_grades[3]
 
 
