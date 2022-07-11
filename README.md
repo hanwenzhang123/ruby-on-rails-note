@@ -102,6 +102,7 @@ broswer - web server - public - routing
 - `rails generate controller pages` - create a pages controller 
 - `rails g model Post title:string body:text` - create a model file for us
 - `rails generate scaffold Article title:string description:text` - to create an article model (with two attributes), articles controller, views for articles and migration file to create articles table
+- `rails generate migration add_password_digest_to_users` - create a migration file to add the password_digest column to the users table
 
 #### A collapsible section with markdown
 <details>
@@ -137,6 +138,7 @@ end
 #### app/models/user.rb
 ```ruby
 class User < ApplicationRecord
+  before_save { self.email = email.downcase }
   has_many :articles
   validates :username, presence: true, 
                       uniqueness: { case_sensitive: false }, 
