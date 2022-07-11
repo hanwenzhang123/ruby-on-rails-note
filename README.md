@@ -1,18 +1,21 @@
 # Ruby on Rails Note
 
-## MVC 
+## MVC Model
 - Model - resources in the app => database 
 - View - frontend => UI
 - Controller - how user request being handled => logic
 
-## General Flow of Rails Application
-- Request made at browser
-- Request received at router of rails application
-- Request routed to appropriate action in a controller
-- Controller#action either renders a view template or communicates with model
-- Model communicates with database
-- Model sends back information to controller
-- Controller renders view
+#### General Flow of Rails Application
+<details>
+  <summary>Click to expand!</summary>
+  - Request made at browser
+  - Request received at router of rails application
+  - Request routed to appropriate action in a controller
+  - Controller#action either renders a view template or communicates with model
+  - Model communicates with database
+  - Model sends back information to controller
+  - Controller renders view
+</details>
 
 ## Naming Convention
 - Model name: article
