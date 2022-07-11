@@ -14,6 +14,7 @@ end
 Rails.application.routes.draw do
         get "demo/index"
 end
+
 # public directory
 => will return from public directory other than going to the rail app
 
@@ -155,6 +156,26 @@ resources :posts
 # generate the controller
 rails g model Post title:string body:text   #create a model file for us
 
-rake db: migrate    # create the table
+rails generate migration name_of_migration_file    # generate migration
+          
+rake db:migrate    # create the table
+rails db:rollback       #rollback or undo the changes made by the last migration file that was run
 
   
+# migrate file
+class AddTimestampsToArticles < ActiveRecord::Migration[6.0]
+  def change
+    add_column :articles, :created_at, :datetime        #table name, attribute name, data type
+    add_column :articles, :updated_at, :datetime
+  end
+end
+       
+# db/schema.rb
+ActiveRecord::Schema.define(version: 2020_03_12_131609) do
+  create_table "articles", force: :cascade do |t|
+    t.string "title"    #add attributes for the table in the migration file
+    t.text "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+end
