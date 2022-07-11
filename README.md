@@ -7,7 +7,6 @@
 
 #### General Flow of Rails Application
 <details>
-  <summary></summary>
   
   - Request made at browser
   - Request received at router of rails application
@@ -20,7 +19,6 @@
 
 #### Naming Convention
 <details>
-  <summary></summary>
   
   - Model name: article
   - Class name: Article -> Capitalized A and singular, CamelCase
