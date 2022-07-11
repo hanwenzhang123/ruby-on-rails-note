@@ -96,6 +96,7 @@ broswer - web server - public - routing
 - `rails routes --expanded` - check routes presented in a viewer-friendly way
 - `rails generate migration name_of_migration_file` - generate migration
 - `rails generate migration create_articles` - generate a migration to create an Article table
+- `rails generate migration add_user_id_to_articles` - generate a migration to add the user_id column to articles table
 - `rails db:migrate` - run the migration file
 - `rails db:rollback` - rollback or undo the changes made by the last migration
 - `rails generate controller pages` - create a pages controller 
@@ -123,6 +124,31 @@ broswer - web server - public - routing
 
 
 ## Code Samples
+### Relationship
+#### app/models/article.rb
+```ruby
+class Article < ApplicationRecord
+  belongs_to :user
+  validates :title, presence: true, length: { minimum: 6, maximum: 100 }
+  validates :description, presence: true, length: { minimum: 10, maximum: 300 }
+end
+```
+
+#### app/models/user.rb
+```ruby
+class User < ApplicationRecord
+  has_many :articles
+  validates :username, presence: true, 
+                      uniqueness: { case_sensitive: false }, 
+                      length: { minimum: 3, maximum: 25 }
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :email, presence: true, 
+                      uniqueness: { case_sensitive: false }, 
+                      length: { maximum: 105 },
+                      format: { with: VALID_EMAIL_REGEX }
+end
+```
+
 ### Model
 Open rails console
 - `ModalName.all`
@@ -135,7 +161,7 @@ Open rails console
 
 <details>
   <summary>app/models/article.rb</summary>
-  
+
 ```ruby
 class Article < ApplicationRecord
   validates :title, presence: true, length: { minimum: 6, maximum: 100 }
@@ -161,15 +187,27 @@ end
   <summary>db/schema.rb</summary>
   
 ```ruby
-ActiveRecord::Schema.define(version: 2020_03_12_131609) do
+ActiveRecord::Schema.define(version: 2020_04_06_103010) do
+
   create_table "articles", force: :cascade do |t|
-    t.string "title"    #add attributes for the table in the migration file
+    t.string "title"  #add attributes for the table in the migration file
     t.text "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer "user_id"
   end
+
+  create_table "users", force: :cascade do |t|
+    t.string "username"
+    t.string "email"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
 end
 ```
+</details>
+</details>
 </details>
 
 
@@ -184,6 +222,7 @@ class ArticlesController < ApplicationController
   def show
     @article = Article.find(params[:id])  #params that sends in the id in hash format
   end
+                                                
   def index
     @articles = Article.all  #save values to an instance variable
   end
@@ -231,6 +270,7 @@ class ArticlesController < ApplicationController
 
 end
 ```
+</details>
 </details>
 
 
