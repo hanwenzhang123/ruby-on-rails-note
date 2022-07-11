@@ -7,6 +7,7 @@
 
 <details>
   <summary>General Flow of Rails Application</summary>
+  
   - Request made at browser
   - Request received at router of rails application
   - Request routed to appropriate action in a controller
@@ -18,6 +19,7 @@
 
 <details>
   <summary>Naming Convention</summary>
+  
   - Model name: article
   - Class name: Article -> Capitalized A and singular, CamelCase
   - File name: article.rb -> singular and all lowercase, snake_case
