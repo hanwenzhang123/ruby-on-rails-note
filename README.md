@@ -5,8 +5,9 @@
 - View - frontend => UI
 - Controller - how user request being handled => logic
 
+#### General Flow of Rails Application
 <details>
-  <summary>General Flow of Rails Application</summary>
+  <summary></summary>
   
   - Request made at browser
   - Request received at router of rails application
@@ -17,8 +18,9 @@
   - Controller renders view
 </details>
 
+#### Naming Convention
 <details>
-  <summary>Naming Convention</summary>
+  <summary></summary>
   
   - Model name: article
   - Class name: Article -> Capitalized A and singular, CamelCase
