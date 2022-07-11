@@ -5,9 +5,8 @@
 - View - frontend => UI
 - Controller - how user request being handled => logic
 
-#### General Flow of Rails Application
 <details>
-  <summary>Click to expand!</summary>
+  <summary>General Flow of Rails Application</summary>
   - Request made at browser
   - Request received at router of rails application
   - Request routed to appropriate action in a controller
@@ -17,11 +16,13 @@
   - Controller renders view
 </details>
 
-## Naming Convention
-- Model name: article
-- Class name: Article -> Capitalized A and singular, CamelCase
-- File name: article.rb -> singular and all lowercase, snake_case
-- Table name: articles -> plural of model name and all lowercase
+<details>
+  <summary>Naming Convention</summary>
+  - Model name: article
+  - Class name: Article -> Capitalized A and singular, CamelCase
+  - File name: article.rb -> singular and all lowercase, snake_case
+  - Table name: articles -> plural of model name and all lowercase
+</details>
 
 ## Rails Commands
 - `rails server`, `rails s` - start rails server
