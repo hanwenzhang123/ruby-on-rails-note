@@ -1,9 +1,19 @@
-# Ruby on Rails Note
+---
+title: Ruby-on-Rails Notes
+---
+
+## Table of Contents
+- [MVC Model](#MVC-Model)
+- [Rails Commands](#Rails-Commands)
+- [Database](#Database)
+
 
 ## MVC Model
-- Model - resources in the app => database 
-- View - frontend => UI
-- Controller - how user request being handled => logic
+- **Model (ActiveRecord):** the data and the database, the structure of data, resources in the app, the format and the constraints with which it is stored
+- **View (ActionView):** the user interface, frontend, what is presented to the user, and what the user sees
+- **Controller (ActionController):** request-response handler, how user request being handled, controls the requests of the user and then generates appropriate response to the viewer
+- **ActiveRecord:** A model layer, a middleman ORM to communicate between Rails application code and database table
+
 
 #### General Flow of Rails Application
 <details>
@@ -18,6 +28,22 @@
   - Controller renders view
 </details>
 
+
+#### Rails Architecture
+<details>
+  <summary>Rails Architecture Diagram</summary>
+  
+```
+broswer - web server - public - routing
+               \                 |
+                \            controller
+                 \             |   |
+                    -------- view model - database
+```
+</details>
+
+
+
 #### Naming Convention
 <details>
   <summary>How to Name Properly</summary>
@@ -27,6 +53,7 @@
   - File name: article.rb -> singular and all lowercase, snake_case
   - Table name: articles -> plural of model name and all lowercase
 </details>
+
 
 #### File Structures
 <details>
@@ -60,21 +87,24 @@
 ```
 </details>
 
+
 ## Rails Commands
+- `rails new my-app` - generate a new project
 - `rails server`, `rails s` - start rails server
 - `rails console`, `rails c` - rails console
 - `reload!` - reload the console
-- `rails new my-app` - generate a new project
-- `rails generate controller pages` - Create a pages controller 
-- `rails generate migration create_articles` - To generate a migration to create a table called Article
-- `rails db:migrate` - To run the migration file
-- `rails db:rollback` - to rollback or undo the changes made by the last migration file that was run
-- `rails routes --expanded` - check routes, to see routes presented in a viewer-friendly way
-- `rails generate scaffold Article title:string description:text` - to create an article model (with two attributes), articles controller, views for articles and migration file to create articles table:
+- `rails routes --expanded` - check routes presented in a viewer-friendly way
+- `rails generate migration name_of_migration_file` - generate migration
+- `rails generate migration create_articles` - generate a migration to create an Article table
+- `rails db:migrate` - run the migration file
+- `rails db:rollback` - rollback or undo the changes made by the last migration
+- `rails generate controller pages` - create a pages controller 
+- `rails g model Post title:string body:text` - create a model file for us
+- `rails generate scaffold Article title:string description:text` - to create an article model (with two attributes), articles controller, views for articles and migration file to create articles table
 
 #### A collapsible section with markdown
 <details>
-  <summary>Type of the Attributes </summary>
+  <summary>Type of the Data Attributes</summary>
   
 ```ruby
   :string - used for small data types such as a title
@@ -90,3 +120,27 @@
   :primary_key - used for storing a unique key that can uniquely identify each row in a table
 ```
 </details>
+
+
+## Database
+#### db/migrate
+```ruby
+class AddTimestampsToArticles < ActiveRecord::Migration[6.0]
+  def change
+    add_column :articles, :created_at, :datetime    #table name, attribute name, data type
+    add_column :articles, :updated_at, :datetime
+  end
+end
+```
+
+#### db/schema.rb
+```ruby
+ActiveRecord::Schema.define(version: 2020_03_12_131609) do
+  create_table "articles", force: :cascade do |t|
+    t.string "title"    #add attributes for the table in the migration file
+    t.text "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+end
+```
