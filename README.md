@@ -5,7 +5,7 @@ title: Ruby-on-Rails Notes
 ## Table of Contents
 - [MVC Model](#MVC-Model)
 - [Rails Commands](#Rails-Commands)
-- [Database](#Database)
+- [Code Samples](#Code-Samples)
 
 
 ## MVC Model
@@ -122,8 +122,34 @@ broswer - web server - public - routing
 </details>
 
 
-## Database
+## Code Samples
+### Database
+Open rails console
+- `ModalName.all`
+- `ModalName.first`
+- `ModalName.last`
+- `ModalName.new`
+- `ModalName.save`
+- `ModalName.destroy`
+- `ModalName.find(id)`
+
+#### app/models/article.rb
+<details>
+  <summary>Show Code</summary>
+  
+```ruby
+class Article < ApplicationRecord
+  validates :title, presence: true, length: { minimum: 6, maximum: 100 }
+  validates :description, presence: true, length: { minimum: 10, maximum: 300 }
+end
+```
+</details>
+
+
 #### db/migrate
+<details>
+  <summary>Show Code</summary>
+  
 ```ruby
 class AddTimestampsToArticles < ActiveRecord::Migration[6.0]
   def change
@@ -132,8 +158,12 @@ class AddTimestampsToArticles < ActiveRecord::Migration[6.0]
   end
 end
 ```
+</details>
 
 #### db/schema.rb
+<details>
+  <summary>Show Code</summary>
+  
 ```ruby
 ActiveRecord::Schema.define(version: 2020_03_12_131609) do
   create_table "articles", force: :cascade do |t|
@@ -144,3 +174,50 @@ ActiveRecord::Schema.define(version: 2020_03_12_131609) do
   end
 end
 ```
+</details>
+
+
+### Controller
+#### app/controllers/articles_controller.rb
+<details>
+  <summary>Show Code</summary>
+  
+```ruby
+class ArticlesController < ApplicationController
+  def show
+    @article = Article.find(params[:id])  #params that sends in the id in hash format
+  end
+  def index
+    @articles = Article.all  #save values to an instance variable
+  end
+  def new
+    @article = Article.new
+  end
+  def create
+    @article = Article.new(params.require(:article).permit(:title, :description))
+    if @article.save
+      flash[:notice] = "Article was created successfully."
+      redirect_to @article 
+    else
+      render 'new'
+    end
+  end
+end
+```
+</details>
+
+
+### Config
+#### config/routes.rb
+<details>
+  <summary>Show Code</summary>
+  
+```ruby
+Rails.application.routes.draw do
+  root 'pages#home'
+  get 'about', to: 'pages#about'
+  resources :articles, only: [:show, :index, :new, :create]    #get all the routes available using keyword resources
+end
+```
+</details>
+ 
