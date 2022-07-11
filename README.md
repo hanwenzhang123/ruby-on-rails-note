@@ -123,7 +123,7 @@ broswer - web server - public - routing
 
 
 ## Code Samples
-### Database
+### Model
 Open rails console
 - `ModalName.all`
 - `ModalName.first`
@@ -134,7 +134,7 @@ Open rails console
 - `ModalName.find(id)`
 
 <details>
-  <summary>Sapp/models/article.rb</summary>
+  <summary>app/models/article.rb</summary>
   
 ```ruby
 class Article < ApplicationRecord
@@ -246,4 +246,4 @@ Rails.application.routes.draw do
 end
 ```
 </details>
- 
+  
