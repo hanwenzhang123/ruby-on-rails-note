@@ -133,9 +133,8 @@ Open rails console
 - `ModalName.destroy`
 - `ModalName.find(id)`
 
-#### app/models/article.rb
 <details>
-  <summary>Show Code</summary>
+  <summary>Sapp/models/article.rb</summary>
   
 ```ruby
 class Article < ApplicationRecord
@@ -145,10 +144,8 @@ end
 ```
 </details>
 
-
-#### db/migrate
 <details>
-  <summary>Show Code</summary>
+  <summary>db/migrate</summary>
   
 ```ruby
 class AddTimestampsToArticles < ActiveRecord::Migration[6.0]
@@ -160,9 +157,8 @@ end
 ```
 </details>
 
-#### db/schema.rb
 <details>
-  <summary>Show Code</summary>
+  <summary>db/schema.rb</summary>
   
 ```ruby
 ActiveRecord::Schema.define(version: 2020_03_12_131609) do
@@ -178,45 +174,75 @@ end
 
 
 ### Controller
-#### app/controllers/articles_controller.rb
 <details>
-  <summary>Show Code</summary>
+  <summary>app/controllers/articles_controller.rb</summary>
   
 ```ruby
 class ArticlesController < ApplicationController
+  before_action :set_article, only: [:show, :edit, :update, :destroy]
+
   def show
     @article = Article.find(params[:id])  #params that sends in the id in hash format
   end
   def index
     @articles = Article.all  #save values to an instance variable
   end
+
   def new
     @article = Article.new
   end
+
+  def edit
+  end
+
   def create
-    @article = Article.new(params.require(:article).permit(:title, :description))
+    @article = Article.new(article_params)
     if @article.save
       flash[:notice] = "Article was created successfully."
-      redirect_to @article 
+      redirect_to @article
     else
       render 'new'
     end
   end
+
+  def update
+    if @article.update(article_params)
+      flash[:notice] = "Article was updated successfully."
+      redirect_to @article
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @article.destroy
+    redirect_to articles_path
+  end
+
+  private
+
+  def set_article
+    @article = Article.find(params[:id])
+  end
+
+  def article_params
+    params.require(:article).permit(:title, :description)  #require the top level key and the keys you want to use in this instance object
+  end
+
 end
 ```
 </details>
 
 
 ### Config
-#### config/routes.rb
 <details>
-  <summary>Show Code</summary>
+  <summary>config/routes.rb</summary>
   
 ```ruby
 Rails.application.routes.draw do
   root 'pages#home'
   get 'about', to: 'pages#about'
-  resources :articles, only: [:show, :index, :new, :create]    #get all the routes available using keyword resources
+  resources :articles    #get all the routes available using keyword resources
 end
 ```
 </details>
