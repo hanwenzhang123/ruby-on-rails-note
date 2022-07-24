@@ -164,6 +164,7 @@ class User < ApplicationRecord
                       uniqueness: { case_sensitive: false }, 
                       length: { maximum: 105 },
                       format: { with: VALID_EMAIL_REGEX }
+  has_secure_password #bcrypt gem => rails generate migration add_password_digest_to_users
 end
 ```
 </details>
@@ -171,6 +172,7 @@ end
 <details>
   <summary>db/migrate</summary>
   
+- You need to run rails db:migrate afterwards to add the fields after each modification
 ```ruby
 #rails generate migration add_timestamps_to_articles
 class AddTimestampsToArticles < ActiveRecord::Migration[6.0]
@@ -185,6 +187,15 @@ end
 class AddUserIdToArticles < ActiveRecord::Migration[6.0]
   def change
     add_column :articles, :user_id, :int
+  end
+end
+```
+```ruby
+#rails generate migration add_password_digest_to_users 
+#rails console => user = User.last, user.authenticate("password123")
+class AddPasswordDigestToUsers < ActiveRecord::Migration[6.0]
+  def change
+    add_column :users, :password_digest, :string
   end
 end
 ```
@@ -209,6 +220,7 @@ ActiveRecord::Schema.define(version: 2020_04_06_103010) do
     t.string "email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "password_digest"
   end
 
 end
