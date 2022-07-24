@@ -125,32 +125,6 @@ broswer - web server - public - routing
 
 
 ## Code Samples
-### Relationship
-#### app/models/article.rb
-```ruby
-class Article < ApplicationRecord
-  belongs_to :user  #association, singular since article can only belong to one user
-  validates :title, presence: true, length: { minimum: 6, maximum: 100 }
-  validates :description, presence: true, length: { minimum: 10, maximum: 300 }
-end
-```
-
-#### app/models/user.rb
-```ruby
-class User < ApplicationRecord
-  before_save { self.email = email.downcase }
-  has_many :articles  #association
-  validates :username, presence: true, 
-                      uniqueness: { case_sensitive: false }, 
-                      length: { minimum: 3, maximum: 25 }
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, presence: true, 
-                      uniqueness: { case_sensitive: false }, 
-                      length: { maximum: 105 },
-                      format: { with: VALID_EMAIL_REGEX }
-end
-```
-
 ### Model
 Open rails console
 - `ModalName.all`
@@ -160,6 +134,8 @@ Open rails console
 - `ModalName.save`
 - `ModalName.destroy`
 - `ModalName.find(id)`
+- `ModalName.find_by(field_id: id)`
+- `ModalName.update_all(field_id: id)`
 
 <details>
   <summary>app/models/article.rb</summary>
@@ -178,6 +154,7 @@ end
 
 ```ruby
 class User < ApplicationRecord
+  before_save { self.email = email.downcase }
   has_many :articles  #association
   validates :username, presence: true, 
                       uniqueness: { case_sensitive: false }, 
