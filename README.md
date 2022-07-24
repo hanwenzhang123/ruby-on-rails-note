@@ -129,7 +129,7 @@ broswer - web server - public - routing
 #### app/models/article.rb
 ```ruby
 class Article < ApplicationRecord
-  belongs_to :user
+  belongs_to :user  #association, singular since article can only belong to one user
   validates :title, presence: true, length: { minimum: 6, maximum: 100 }
   validates :description, presence: true, length: { minimum: 10, maximum: 300 }
 end
@@ -139,7 +139,7 @@ end
 ```ruby
 class User < ApplicationRecord
   before_save { self.email = email.downcase }
-  has_many :articles
+  has_many :articles  #association
   validates :username, presence: true, 
                       uniqueness: { case_sensitive: false }, 
                       length: { minimum: 3, maximum: 25 }
@@ -166,8 +166,27 @@ Open rails console
 
 ```ruby
 class Article < ApplicationRecord
+  belongs_to :user  #association, singular since article can only belong to one user
   validates :title, presence: true, length: { minimum: 6, maximum: 100 }
   validates :description, presence: true, length: { minimum: 10, maximum: 300 }
+end
+```
+</details>
+
+<details>
+  <summary>app/models/user.rb</summary>
+
+```ruby
+class User < ApplicationRecord
+  has_many :articles  #association
+  validates :username, presence: true, 
+                      uniqueness: { case_sensitive: false }, 
+                      length: { minimum: 3, maximum: 25 }
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :email, presence: true, 
+                      uniqueness: { case_sensitive: false }, 
+                      length: { maximum: 105 },
+                      format: { with: VALID_EMAIL_REGEX }
 end
 ```
 </details>
@@ -176,10 +195,19 @@ end
   <summary>db/migrate</summary>
   
 ```ruby
+#rails generate migration add_timestamps_to_articles
 class AddTimestampsToArticles < ActiveRecord::Migration[6.0]
   def change
     add_column :articles, :created_at, :datetime    #table name, attribute name, data type
     add_column :articles, :updated_at, :datetime
+  end
+end
+```
+```ruby
+#rails generate migration add_user_id_to_articles
+class AddUserIdToArticles < ActiveRecord::Migration[6.0]
+  def change
+    add_column :articles, :user_id, :int
   end
 end
 ```
