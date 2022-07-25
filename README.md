@@ -292,6 +292,20 @@ end
 </details>
 </details>
 
+<details>
+<summary>app/controllers/users_controller.rb</summary>
+
+```ruby
+class UsersController < ApplicationController
+
+  def new
+    @user = User.new
+  end
+
+end
+```
+</details>
+</details>
 
 ### Config
 <details>
@@ -300,8 +314,10 @@ end
 ```ruby
 Rails.application.routes.draw do
   root 'pages#home'
-  get 'about', to: 'pages#about'
+  get 'about', to: 'pages#about'  #go to pages controller with about action
   resources :articles    #get all the routes available using keyword resources
+  get 'signup', to: 'users#new' #go to users controller with new action
+  resources :users, except: [:new]  #get all the routes available for users, we can do: post 'users', to: 'users#create'
 end
 ```
 </details>
