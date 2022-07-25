@@ -94,6 +94,7 @@ broswer - web server - public - routing
 - `rails console`, `rails c` - rails console
 - `reload!` - reload the console
 - `rails routes --expanded` - check routes presented in a viewer-friendly way
+- `rails routes --expanded | grep edit` - show the routes with the keyword edit
 - `rails generate migration name_of_migration_file` - generate migration
 - `rails generate migration create_articles` - generate a migration to create an Article table
 - `rails generate migration add_user_id_to_articles` - generate a migration to add the user_id column to articles table
@@ -126,7 +127,9 @@ broswer - web server - public - routing
 
 ## Code Samples
 ### Model
-Open rails console
+<details>
+  <summary>rails console</summary>
+  
 - `ModalName.all`
 - `ModalName.first`
 - `ModalName.last`
@@ -136,6 +139,7 @@ Open rails console
 - `ModalName.find(id)`
 - `ModalName.find_by(field_id: id)`
 - `ModalName.update_all(field_id: id)`
+</details>
 
 <details>
   <summary>app/models/article.rb</summary>
@@ -298,8 +302,28 @@ end
 ```ruby
 class UsersController < ApplicationController
 
+  def show
+    @user = User.find(params[:id])
+    @articles = @user.articles
+  end
+
   def new
     @user = User.new
+  end
+  
+  def create
+    @user = User.new(user_params)
+    if @user.save
+      flash[:notice] = "Welcome to the Alpha Blog #{@user.username}, you have successfully signed up"
+      redirect_to articles_path
+    else
+      render 'new'
+    end
+  end
+
+  private
+  def user_params
+    params.require(:user).permit(:username, :email, :password)
   end
 
 end
