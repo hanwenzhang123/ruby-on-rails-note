@@ -65,7 +65,7 @@ broswer - web server - public - routing
     - models
     - views
     - controllers
-    - helpers: view helpers, helping us to write code in views
+    - helpers: view helpers, helper methods that helping us to write code in views
     - assets: javascript, style sheets, some fundamentals images
     - mailers: like have your application send emails
     - jobs: write tasks your app do, like have your app run a certain job every night at midnight etc
@@ -90,7 +90,7 @@ broswer - web server - public - routing
 
 ## Rails Commands
 - `rails new my-app` - generate a new project
-- `rails server`, `rails s` - start rails server
+- `rails server`, `rails s` - rails server
 - `rails console`, `rails c` - rails console
 - `reload!` - reload the console
 - `rails routes --expanded` - check routes presented in a viewer-friendly way
@@ -342,6 +342,23 @@ Rails.application.routes.draw do
   resources :articles    #get all the routes available using keyword resources
   get 'signup', to: 'users#new' #go to users controller with new action
   resources :users, except: [:new]  #get all the routes available for users, we can do: post 'users', to: 'users#create'
+end
+```
+</details>
+  
+### Helper
+<details>
+  <summary>app/helpers/application_helper.rb</summary>
+  
+```ruby
+module ApplicationHelper
+  def gravatar_for(user, options = { size: 80})   # <%= gravatar_for @user, size: 200 %>
+    email_address = user.email.downcase
+    hash = Digest::MD5.hexdigest(email_address)
+    size = options[:size]
+    gravatar_url = "https://www.gravatar.com/avatar/#{hash}?s=#{size}"
+    image_tag(gravatar_url, alt: user.username, class: "rounded shadow mx-auto d-block")
+  end
 end
 ```
 </details>
