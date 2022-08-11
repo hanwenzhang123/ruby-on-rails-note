@@ -73,6 +73,7 @@ broswer - web server - public - routing
   bin - ruby script like bundle commands rail commands etc
   config - configuration code that your app needs (database.yml routes.rb - add new routes)
   db - for database, sqlite for default, migration, do not update schema.rv directly
+  engine - miniature applications that provide functionality to their host applications
   lib - reusable code library, two directory assets and tasks
   log - application log files, good for debugging
   public - public files like 404 or html
