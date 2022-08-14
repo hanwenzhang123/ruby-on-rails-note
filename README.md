@@ -305,13 +305,31 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @articles = @user.articles
+    @articles = @user.articles.paginate(page: params[:page], per_page: 5)
+  end
+
+  def index
+    @users = User.paginate(page: params[:page], per_page: 5)
   end
 
   def new
     @user = User.new
   end
-  
+
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      flash[:notice] = "Your account information was successfully updated"
+      redirect_to @user
+    else
+      render 'edit'
+    end
+  end
+
   def create
     @user = User.new(user_params)
     if @user.save
@@ -325,6 +343,27 @@ class UsersController < ApplicationController
   private
   def user_params
     params.require(:user).permit(:username, :email, :password)
+  end
+  
+end
+```
+</details>
+</details>
+
+<details>
+<summary>app/controllers/sessions_controller.rb</summary>
+
+```ruby
+class SessionsController < ApplicationController
+
+  def new
+  end
+
+  def create
+  
+  end
+
+  def destroy
   end
 
 end
@@ -343,6 +382,10 @@ Rails.application.routes.draw do
   resources :articles    #get all the routes available using keyword resources
   get 'signup', to: 'users#new' #go to users controller with new action
   resources :users, except: [:new]  #get all the routes available for users, we can do: post 'users', to: 'users#create'
+  get 'login', to: 'sessions#new' #get the login path, send to session controller new action
+  post 'login', to: 'sessions#create' #post to the login path, send to session controller create action
+  delete 'logout', to: 'sessions#destroy' #delete request
+end
 end
 ```
 </details>
