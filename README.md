@@ -11,7 +11,7 @@ title: Ruby-on-Rails Notes
 ## MVC Model
 
 <details>
-  <summary>General Flow of Rails Application => How Rails App Works</summary>
+  <summary>MVC Model => What is MVC</summary>
   
 ```
   - **Model (ActiveRecord):** the data and the database, the structure of data, resources in the app, the format and the constraints with which it is stored
@@ -38,7 +38,7 @@ title: Ruby-on-Rails Notes
 
 
 <details>
-  <summary>Rails Architecture Diagram</summary>
+  <summary>Rails Architecture => Diagram</summary>
   
 ```
 broswer - web server - public - routing
