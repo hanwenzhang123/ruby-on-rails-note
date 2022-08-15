@@ -8,16 +8,20 @@ title: Ruby-on-Rails Notes
 - [Code Samples](#Code-Samples)
 
 
-## MVC Model
-- **Model (ActiveRecord):** the data and the database, the structure of data, resources in the app, the format and the constraints with which it is stored
-- **View (ActionView):** the user interface, frontend, what is presented to the user, and what the user sees
-- **Controller (ActionController):** request-response handler, how user request being handled, controls the requests of the user and then generates appropriate response to the viewer
-- **ActiveRecord:** A model layer, a middleman ORM to communicate between Rails application code and database table
+### MVC Model
 
-
-#### General Flow of Rails Application
 <details>
-  <summary>How Rails App Works</summary>
+  <summary>General Flow of Rails Application => How Rails App Works</summary>
+  
+  - **Model (ActiveRecord):** the data and the database, the structure of data, resources in the app, the format and the constraints with which it is stored
+  - **View (ActionView):** the user interface, frontend, what is presented to the user, and what the user sees
+  - **Controller (ActionController):** request-response handler, how user request being handled, controls the requests of the user and then generates appropriate response to the viewer
+  - **ActiveRecord:** A model layer, a middleman ORM to communicate between Rails application code and database table
+</details>
+
+
+<details>
+  <summary>General Flow of Rails Application => How Rails App Works</summary>
   
   - Request made at browser
   - Request received at router of rails application
@@ -29,7 +33,6 @@ title: Ruby-on-Rails Notes
 </details>
 
 
-#### Rails Architecture
 <details>
   <summary>Rails Architecture Diagram</summary>
   
@@ -43,10 +46,8 @@ broswer - web server - public - routing
 </details>
 
 
-
-#### Naming Convention
 <details>
-  <summary>How to Name Properly</summary>
+  <summary>Naming Convention => How to Name Properly</summary>
   
   - Model name: article
   - Class name: Article -> Capitalized A and singular, CamelCase
@@ -55,9 +56,8 @@ broswer - web server - public - routing
 </details>
 
 
-#### File Structures
 <details>
-  <summary>How Repositiries Organized</summary>
+  <summary>File Structures => How Repositiries Organized</summary>
   
 ```ruby
 # repositories
@@ -89,7 +89,7 @@ broswer - web server - public - routing
 </details>
 
 
-## Rails Commands
+### Rails Commands
 <details>
   <summary>Rails Commands Examples</summary>
   
@@ -113,7 +113,7 @@ broswer - web server - public - routing
 ```
 </details>
 
-## Data Attributes
+### Data Attributes
 <details>
   <summary>Type of the Data Attributes</summary>
   
@@ -133,8 +133,8 @@ broswer - web server - public - routing
 </details>
 
 
-## Code Samples
-### Model
+### Code Samples
+#### Model
 <details>
   <summary>rails console</summary>
   
@@ -313,7 +313,7 @@ end
 </details>
 
 
-### Controller
+#### Controller
 <details>
   <summary>app/controllers/application_controller.rb => controller methods as helper methods</summary>
   
@@ -580,7 +580,7 @@ end
 </details>
 </details>
   
-### View
+#### View
   <details>
   <summary>app/views/users/_form.html.erb</summary>
   
@@ -663,7 +663,7 @@ end
 </details>
 </details>
 
-### Config
+#### Config
 <details>
   <summary>config/routes.rb</summary>
   
@@ -682,7 +682,7 @@ end
 ```
 </details>
   
-### Helper
+#### Helper
 <details>
   <summary>app/helpers/application_helper.rb</summary>
   
