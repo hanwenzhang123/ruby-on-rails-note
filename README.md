@@ -98,6 +98,7 @@ broswer - web server - public - routing
 - `rails routes --expanded | grep edit` - show the routes with the keyword edit
 - `rails generate migration name_of_migration_file` - generate migration
 - `rails generate migration create_articles` - generate a migration to create an Article table
+- `rails generate migration add_admin_to_users` - generate a migration to add admin fields (columns) to users
 - `rails generate migration add_user_id_to_articles` - generate a migration to add the user_id column to articles table
 - `rails db:migrate` - run the migration file
 - `rails db:rollback` - rollback or undo the changes made by the last migration
@@ -140,6 +141,7 @@ broswer - web server - public - routing
 - `ModalName.find(id)`
 - `ModalName.find_by(field_id: id)`
 - `ModalName.update_all(field_id: id)`
+- `ModalName.toggle!(field)` - `user.toggle!(:admin)`
 </details>
 
 <details>
@@ -160,7 +162,7 @@ end
 ```ruby
 class User < ApplicationRecord
   before_save { self.email = email.downcase }
-  has_many :articles  #association
+  has_many :articles， dependent: :destroy  #association, dependent will be destroyed if the user is deleted
   validates :username, presence: true, 
                       uniqueness: { case_sensitive: false }, 
                       length: { minimum: 3, maximum: 25 }
