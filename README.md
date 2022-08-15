@@ -90,6 +90,10 @@ broswer - web server - public - routing
 
 
 ## Rails Commands
+<details>
+  <summary>Rails Commands Examples</summary>
+  
+```ruby
 - `rails new my-app` - generate a new project
 - `rails server`, `rails s` - rails server
 - `rails console`, `rails c` - rails console
@@ -106,8 +110,10 @@ broswer - web server - public - routing
 - `rails g model Post title:string body:text` - create a model file for us
 - `rails generate scaffold Article title:string description:text` - to create an article model (with two attributes), articles controller, views for articles and migration file to create articles table
 - `rails generate migration add_password_digest_to_users` - create a migration file to add the password_digest column to the users table
+```
+</details>
 
-#### A collapsible section with markdown
+## Data Attributes
 <details>
   <summary>Type of the Data Attributes</summary>
   
