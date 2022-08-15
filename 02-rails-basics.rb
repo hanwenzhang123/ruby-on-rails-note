@@ -78,3 +78,11 @@ rails generate model Post title:string body:text
 :primary_key - used for storing a unique key that can uniquely identify each row in a table
 
   
+What is a method you can use right after the class definition of a controller to execute before other actions?
+  - before_action
+What is the rails provided method you can use to add a secure hashed password digest to users?
+  - has_secure_password
+What is the method you can use on a column to switch it's value from true to false, or vice versa
+  - toggle!
+What code would be on the "many" side model of the one-to-many association?
+  - belongs_to
