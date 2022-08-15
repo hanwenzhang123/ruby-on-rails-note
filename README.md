@@ -156,6 +156,8 @@ broswer - web server - public - routing
 ```ruby
 class Article < ApplicationRecord
   belongs_to :user  #association, singular since article can only belong to one user
+  has_many :article_categories
+  has_many :categories, through: :article_categories
   validates :title, presence: true, length: { minimum: 6, maximum: 100 }
   validates :description, presence: true, length: { minimum: 10, maximum: 300 }
 end
@@ -181,6 +183,31 @@ class User < ApplicationRecord
 end
 ```
 </details>
+
+<details>
+  <summary>app/models/category.rb</summary>
+
+```ruby
+class Category < ApplicationRecord
+  validates :name, presence: true, length: { minimum: 3, maximum: 25 }
+  validates_uniqueness_of :name
+  has_many :article_categories
+  has_many :articles, through: :article_categories
+end
+```
+</details>
+
+<details>
+  <summary>app/models/article_category.rb </summary>
+
+```ruby
+class ArticleCategory < ApplicationRecord
+  belongs_to :article
+  belongs_to :category
+end
+```
+</details>
+
 
 <details>
   <summary>db/migrate</summary>
@@ -212,13 +239,49 @@ class AddPasswordDigestToUsers < ActiveRecord::Migration[6.0]
   end
 end
 ```
+```ruby
+#rails generate migration add_admin_to_users 
+#rails console => user.toggle!(:admin)
+class AddAdminToUsers < ActiveRecord::Migration[6.0]
+  def change
+    add_column :users, :admin, :boolean, default: false
+  end
+end
+```
+```ruby
+#rails generate migration create_categories
+class CreateCategories < ActiveRecord::Migration[6.0]
+  def change
+    create_table :categories do |t|
+      t.string :name
+      t.timestamps
+    end
+  end
+end
+```
+```ruby
+#rails generate migration create_article_categories
+class CreateArticleCategories < ActiveRecord::Migration[6.0]
+  def change
+    create_table :article_categories do |t|
+      t.integer :article_id
+      t.integer :category_id
+    end
+  end
+end
+```
 </details>
 
 <details>
   <summary>db/schema.rb</summary>
   
 ```ruby
-ActiveRecord::Schema.define(version: 2020_04_06_103010) do
+ActiveRecord::Schema.define(version: 2020_05_19_124121) do
+
+  create_table "article_categories", force: :cascade do |t|
+    t.integer "article_id"
+    t.integer "category_id"
+  end
 
   create_table "articles", force: :cascade do |t|
     t.string "title"  #add attributes for the table in the migration file
@@ -228,12 +291,19 @@ ActiveRecord::Schema.define(version: 2020_04_06_103010) do
     t.integer "user_id"
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "password_digest"
+    t.boolean "admin", default: false
   end
 
 end
@@ -248,6 +318,7 @@ end
   <summary>app/controllers/application_controller.rb => controller methods as helper methods</summary>
   
 ```ruby
+
 class ApplicationController < ActionController::Base
 
   helper_method :current_user, :logged_in?
@@ -258,6 +329,13 @@ class ApplicationController < ActionController::Base
 
   def logged_in?
     !!current_user
+  end
+
+  def require_user
+    if !logged_in?
+      flash[:alert] = "You must be logged in to perform that action"
+      redirect_to login_path
+    end
   end
 
 end
@@ -271,13 +349,16 @@ end
 ```ruby
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
+  before_action :require_user, except: [:show, :index]
+  before_action :require_same_user, only: [:edit, :update, :destroy]
 
   def show
-    @article = Article.find(params[:id])  #params that sends in the id in hash format
+    # @article = Article.find(params[:id])  # params that sends in the id in hash format, no needs this line due to before_action
   end
-                                                
+  
   def index
-    @articles = Article.all  #save values to an instance variable
+    @articles = Article.paginate(page: params[:page], per_page: 5)  # pagination
+    # @articles = Article.all  #save values to an instance variable
   end
 
   def new
@@ -287,8 +368,9 @@ class ArticlesController < ApplicationController
   def edit
   end
 
-  def create
+   def create
     @article = Article.new(article_params)
+    @article.user = current_user
     if @article.save
       flash[:notice] = "Article was created successfully."
       redirect_to @article
@@ -312,13 +394,20 @@ class ArticlesController < ApplicationController
   end
 
   private
-
+  
   def set_article
     @article = Article.find(params[:id])
   end
 
   def article_params
-    params.require(:article).permit(:title, :description)  #require the top level key and the keys you want to use in this instance object
+    params.require(:article).permit(:title, :description, category_ids: [])  #require the top level key and the keys you want to use in this instance object
+  end
+
+  def require_same_user
+    if current_user != @article.user && !current_user.admin?
+      flash[:alert] = "You can only edit or delete your own article"
+      redirect_to @article
+    end
   end
 
 end
@@ -331,9 +420,11 @@ end
 
 ```ruby
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :require_user, only: [:edit, :update]
+  before_action :require_same_user, only: [:edit, :update, :destroy]
 
   def show
-    @user = User.find(params[:id])
     @articles = @user.articles.paginate(page: params[:page], per_page: 5)
   end
 
@@ -346,11 +437,9 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:notice] = "Your account information was successfully updated"
       redirect_to @user
@@ -362,6 +451,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      session[:user_id] = @user.id
       flash[:notice] = "Welcome to the Alpha Blog #{@user.username}, you have successfully signed up"
       redirect_to articles_path
     else
@@ -369,9 +459,27 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    @user.destroy
+    session[:user_id] = nil if @user == current_user
+    flash[:notice] = "Account and all associated articles successfully deleted"
+    redirect_to articles_path
+  end
+
   private
   def user_params
     params.require(:user).permit(:username, :email, :password)
+  end
+
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  def require_same_user
+    if current_user != @user && !current_user.admin?
+      flash[:alert] = "You can only edit or delete your own account"
+      redirect_to @user
+    end
   end
   
 end
@@ -406,6 +514,67 @@ class SessionsController < ApplicationController
     redirect_to root_path
   end
 
+end
+```
+</details>
+</details>
+
+<details>
+<summary>app/controllers/categories_controller.rb </summary>
+
+```ruby
+class CategoriesController < ApplicationController
+  before_action :require_admin, except: [:index, :show]
+
+  def new
+    @category = Category.new
+  end
+
+  def create
+    @category = Category.new(category_params)
+    if @category.save
+      flash[:notice] = "Category was successfully created"
+      redirect_to @category
+    else
+      render 'new'
+    end
+  end
+
+  def edit
+    @category = Category.find(params[:id])
+  end
+
+  def update
+    @category = Category.find(params[:id])
+    if @category.update(category_params)
+      flash[:notice] = "Category name updated successfully"
+      redirect_to @category
+    else
+      render 'edit'
+    end
+  end
+
+  def index
+    @categories = Category.paginate(page: params[:page], per_page: 5)
+  end
+
+  def show
+    @category = Category.find(params[:id])
+    @articles = @category.articles.paginate(page: params[:page], per_page: 5)
+  end
+  
+  private
+
+  def category_params
+    params.require(:category).permit(:name)
+  end
+
+  def require_admin
+    if !(logged_in? && current_user.admin?)
+      flash[:alert] = "Only admins can perform that action"
+      redirect_to categories_path
+    end
+  end
 end
 ```
 </details>
@@ -508,7 +677,7 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#new' #get the login path, send to session controller new action
   post 'login', to: 'sessions#create' #post to the login path, send to session controller create action
   delete 'logout', to: 'sessions#destroy' #delete request
-end
+  resources :categories, except: [:destroy]
 end
 ```
 </details>
