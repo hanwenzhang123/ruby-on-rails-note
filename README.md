@@ -327,9 +327,7 @@ end
   <summary>app/controllers/application_controller.rb => controller methods as helper methods</summary>
   
 ```ruby
-
 class ApplicationController < ActionController::Base
-
   helper_method :current_user, :logged_in?
 
   def current_user
@@ -347,6 +345,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+end
+```
+
+```ruby
+class ApplicationController < ActionController::Base
+  def current_user
+    return unless session[:user_id]
+    @current_user ||= User.find(session[:user_id])
+  end
 end
 ```
 </details>
