@@ -155,6 +155,8 @@ broswer - web server - public - routing
 - `ModalName.find_by(field_id: id)`
 - `ModalName.update_all(field_id: id)`
 - `ModalName.toggle!(field)` - `user.toggle!(:admin)`
+- `user.stocks << stock` - add that stock as a reference to user.stocks (many to many relationship)
+- `user.stocks.count` - count how many
 </details>
 
 <details>
