@@ -106,6 +106,8 @@ broswer - web server - public - routing
 - `reload!` - reload the console
 - `rails routes --expanded` - check routes presented in a viewer-friendly way
 - `rails routes --expanded | grep edit` - show the routes with the keyword edit
+- `rails generate controller message create` - create a message controller
+- `rails destroy controller message` - undo the message controller that was created
 - `rails generate migration name_of_migration_file` - generate migration
 - `rails generate migration create_articles` - generate a migration to create an Article table
 - `rails generate migration add_admin_to_users` - generate a migration to add admin fields (columns) to users
