@@ -470,3 +470,15 @@ class SomeService
 	end
 end
   
+
+# Dangerous methods "!"
+Methods that end in ! indicate that the method will modify the object it is called on
+
+foo = "A STRING"  # a string called foo
+foo.downcase!     # modifies foo itself
+puts foo          # prints modified foo
+
+foo = "A STRING"    # a string called foo
+bar = foo.downcase  # doesn't modify foo; returns a modified string
+puts foo            # prints unchanged foo => A STRING
+puts bar            # prints newly created bar => a string
