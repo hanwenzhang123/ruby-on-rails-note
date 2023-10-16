@@ -2,13 +2,8 @@
 title: Ruby-on-Rails Notes
 ---
 
-## Table of Contents
-- [Rails Commands](#Rails-Commands)
-- [Code Samples](#Code-Samples)
-
 ## Rails Commands
-<details>
-  <summary>Rails Commands Examples</summary>
+### Examples
   
 ```ruby
 - `rails new my-app` - generate a new project
@@ -31,11 +26,9 @@ title: Ruby-on-Rails Notes
 - `rails generate migration add_password_digest_to_users` - create a migration file to add the password_digest column to the users table
 - `rails g resource UserStock user:references stock:references` - many to many association, tables user primary id and stock primary id fields which will be used as foreign keys
 ```
-</details>
 
-### Data Attributes
-<details>
-  <summary>Type of the Data Attributes</summary>
+## Data Attributes
+### Type of the Data Attributes
   
 ```ruby
   :string - used for small data types such as a title
@@ -50,141 +43,6 @@ title: Ruby-on-Rails Notes
   :float - used for storing decimals, when you do not care about the precision of the number since it rounds
   :primary_key - used for storing a unique key that can uniquely identify each row in a table
 ```
-</details>
-
-## MVC Model
-
-<details>
-  <summary>MVC Model => What is MVC</summary>
-  
-```
-  - **Model (ActiveRecord):** the data and the database, the structure of data, resources in the app, the format and the constraints with which it is stored
-  - **View (ActionView):** the user interface, frontend, what is presented to the user, and what the user sees
-  - **Controller (ActionController):** request-response handler, how user request being handled, controls the requests of the user and then generates appropriate response to the viewer
-  - **ActiveRecord:** A model layer, a middleman ORM to communicate between Rails application code and database table
-```
-</details>
-
-
-<details>
-  <summary>General Flow of Rails Application => How Rails App Works</summary>
-  
-```
-  - Request made at browser
-  - Request received at router of rails application
-  - Request routed to appropriate action in a controller
-  - Controller#action either renders a view template or communicates with model
-  - Model communicates with database
-  - Model sends back information to controller
-  - Controller renders view
-```
-</details>
-
-
-<details>
-  <summary>Rails Architecture => Diagram</summary>
-  
-```
-broswer - web server - public - routing
-               \                 |
-                \            controller
-                 \             |   |
-                    -------- view model - database
-```
-</details>
-
-
-<details>
-  <summary>Naming Convention => How to Name Properly</summary>
-  
-```
-  - Model name: article
-  - Class name: Article -> Capitalized A and singular, CamelCase
-  - File name: article.rb -> singular and all lowercase, snake_case
-  - Table name: articles -> plural of model name and all lowercase
-```
-</details>
-
-
-<details>
-  <summary>File Structures => How Repositiries Organized</summary>
-  
-```ruby
-# repositories
-  app - hold the mvc, assets (images, js, stylesheets), helpers, mailers => most of time where you write your code
-    - models
-    - views
-    - controllers
-    - helpers: view helpers, helper methods that helping us to write code in views
-    - assets: javascript, style sheets, some fundamentals images
-    - mailers: like have your application send emails
-    - jobs: write tasks your app do, like have your app run a certain job every night at midnight etc
-    - channels: action cabel
-  bin - ruby script like bundle commands rail commands etc
-  config - configuration code that your app needs (database.yml routes.rb - add new routes)
-  db - for database, sqlite for default, migration, do not update schema.rv directly
-  engine - miniature applications that provide functionality to their host applications
-  lib - reusable code library, two directory assets and tasks
-  log - application log files, good for debugging
-  public - public files like 404 or html
-  test - write test for application
-  tmp - hold temporary files like hash caching etc
-  vendor - hold third party files, code, etc
-# files
-  Gemfile - which dependencies are needed in the application, install and update by gem
-  Gemfile.lock - which dependencies are needed in the application, install and update by gem
-  Rakefile - locate and load path that can be run from the command line
-  README.rdoc - introduction of the application
-```
-</details>
-
-
-## Rails Commands
-<details>
-  <summary>Rails Commands Examples</summary>
-  
-```ruby
-- `rails new my-app` - generate a new project
-- `rails server`, `rails s` - rails server
-- `rails console`, `rails c` - rails console
-- `reload!` - reload the console
-- `rails routes --expanded` - check routes presented in a viewer-friendly way
-- `rails routes --expanded | grep edit` - show the routes with the keyword edit
-- `rails generate controller message create` - create a message controller
-- `rails destroy controller message` - undo the message controller that was created
-- `rails generate migration name_of_migration_file` - generate migration
-- `rails generate migration create_articles` - generate a migration to create an Article table
-- `rails generate migration add_admin_to_users` - generate a migration to add admin fields (columns) to users
-- `rails generate migration add_user_id_to_articles` - generate a migration to add the user_id column to articles table
-- `rails db:migrate` - run the migration file
-- `rails db:rollback` - rollback or undo the changes made by the last migration
-- `rails generate controller pages` - create a pages controller 
-- `rails g model Post title:string body:text` - create a model file for us
-- `rails generate scaffold Article title:string description:text` - to create an article model (with two attributes), articles controller, views for articles and migration file to create articles table
-- `rails generate migration add_password_digest_to_users` - create a migration file to add the password_digest column to the users table
-- `rails g resource UserStock user:references stock:references` - many to many association, tables user primary id and stock primary id fields which will be used as foreign keys
-```
-</details>
-
-### Data Attributes
-<details>
-  <summary>Type of the Data Attributes</summary>
-  
-```ruby
-  :string - used for small data types such as a title
-  :text - used for longer pieces of textual data such as a paragraph
-  :integer - used for storing whole numbers
-  :binary - used for storing data such as images, audio or video
-  :boolean - used for storing true and false values
-  :date - used for storing date
-  :datetime - used for storing the date and time in a single column
-  :timestamp - used for storing the data and time in a single column but converted to UTC and convert back
-  :decimal - used for storing decimals
-  :float - used for storing decimals, when you do not care about the precision of the number since it rounds
-  :primary_key - used for storing a unique key that can uniquely identify each row in a table
-```
-</details>
-
 
 ## Code Samples
 ### Model

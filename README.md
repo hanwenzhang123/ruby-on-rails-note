@@ -2,12 +2,7 @@
 title: Ruby-on-Rails
 ---
 
-## Table of Contents
-- [MVC Model](#MVC-Model)
-
-## MVC Model
-
-### MVC Model => What is MVC
+## MVC Model => What is MVC
   
 ```
   - **Model (ActiveRecord):** the data and the database, the structure of data, resources in the app, the format and the constraints with which it is stored
@@ -17,7 +12,7 @@ title: Ruby-on-Rails
 ```
 
 
-### General Flow of Rails Application => How Rails App Works
+## General Flow of Rails Application => How Rails App Works
   
 ```
   - Request made at browser
@@ -29,7 +24,7 @@ title: Ruby-on-Rails
   - Controller renders view
 ```
 
-### Rails Architecture => Diagram
+## Rails Architecture => Diagram
   
 ```
 broswer - web server - public - routing
@@ -39,7 +34,7 @@ broswer - web server - public - routing
                     -------- view model - database
 ```
 
-### Naming Convention => How to Name Properly
+## Naming Convention => How to Name Properly
   
 ```
   - Model name: article
@@ -48,7 +43,7 @@ broswer - web server - public - routing
   - Table name: articles -> plural of model name and all lowercase
 ```
 
-### File Structures => How Repositiries Organized
+## File Structures => How Repositiries Organized
   
 ```ruby
 # repositories
@@ -79,7 +74,7 @@ broswer - web server - public - routing
   README.rdoc - introduction of the application
 ```
 
-### Business Logic Model vs Controller 
+## Business Logic Model vs Controller 
 - Keep business logic directly related to data, data validation, and data manipulation in the model.
 - Keep business logic related to HTTP request handling and user interactions in the controller.
 - Use service objects or additional Ruby classes for complex business logic that doesn't fit neatly into either the model or controller. This promotes a clean separation of concerns and modularity.

@@ -2,13 +2,7 @@
 title: Ruby-on-Rails Concepts
 ---
 
-## Table of Contents
-- [Ruby-on-Rails](#Ruby-on-Rails)
-
-
-## Ruby-on-Rails
-
-### Ruby Blocks, Procs & Lambdas
+## Ruby Blocks, Procs & Lambdas
 - all used for defining and working with blocks of code, often passed as arguments to methods.
 - all used for creating flexible and reusable code.
 
@@ -18,7 +12,7 @@ title: Ruby-on-Rails Concepts
 
 #### Lambdas
 
-### Ruby Engines
+## Ruby Engines
 https://guides.rubyonrails.org/engines.html
 
 To create a Rails engine, you can use the rails plugin new command, and it will generate the necessary directory structure for an engine. You can then build your engine's functionality in a way that is similar to building a regular Rails application.
@@ -28,19 +22,19 @@ rails plugin new my_engine
 ```
 
 
-### Skinny-Fat Controller and Model
+## Skinny-Fat Controller and Model
 https://dev.to/kputra/rails-skinny-controller-skinny-model-5f2k#phase-3
 
 #### Skinny Controller
 - Keep your controller classes minimal and focused on handling HTTP requests, routing, and delegating the actual business logic to other parts of your application, such as models or services. 
 
 
-### Decorator
+## Decorator
 - separate presentation logic from your models and views
 - API that you decorate to make it look better (not to make it easier to use)
 
 
-### `include` and `extend`
+## `include` and `extend`
 - Both are used to share common functionality among different classes for code organization, modularization, and creating reusable code in Ruby on Rails.
 
 #### `include` - add instance methods to a class
