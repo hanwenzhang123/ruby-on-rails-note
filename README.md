@@ -56,7 +56,7 @@ broswer - web server - public - routing
     - mailers: have your application send emails
     - jobs: write tasks your app does, like have your app run a certain job every night at midnight, etc
     - channels: action cable
-    - services: store complex business logic or interactions with external systems to keep mvc clean
+    - services: store complex business logic or interactions with external systems to keep mvc clean, focused on a single responsibility, like authentication
     - serializer: ActiveModel Serializer controls the format and structure of the data you send as a response, how data is presented when you return it from your API
     - concerns: ActiveSupport Concerns organizes shared pieces of functionality within models, controllers, and other parts of your application, eg: app/models/concerns 
   bin - scripts for application setup like bundle commands, rail commands, etc
