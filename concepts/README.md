@@ -6,10 +6,9 @@ title: Ruby-on-Rails Concepts
 - [Ruby Blocks, Procs & Lambdas](#Ruby-Blocks-Procs-&-Lambdas)
 - [Ruby Engines](#Ruby-Engines)
 - [Skinny-Fat Controller and Model](#Skinny-Fat-Controller-and-Model)
-- ## Decorator
-- ## `include` and `extend`
-- ## concerns
-
+- [Decorator](#Decorator)
+- [concerns](#concerns)
+- [include and extend](#include-and-extend)
 
 ## Ruby Blocks Procs & Lambdas
 - all used for defining and working with blocks of code, often passed as arguments to methods.
