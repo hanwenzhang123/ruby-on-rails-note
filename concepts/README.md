@@ -9,26 +9,63 @@ title: Ruby-on-Rails Concepts
 - [Decorator](#Decorator)
 - [concerns](#concerns)
 - [include and extend](#include-and-extend)
+- [Modify Array](#modify-array)
+- [Shallow Copy Deep Copy](#shallow-copy-deep-copy)
+
 
 ## Ruby Blocks Procs & Lambdas
 - all used for defining and working with blocks of code, often passed as arguments to methods.
 - all used for creating flexible and reusable code.
 
 #### Blocks
+- a piece of code enclosed within {} or do...end and is not an object in itself.
+```
+[1, 2, 3].each do |number|
+  puts number
+end
+```
 
 #### Procs
+- an object that encapsulates a block of code and can be assigned to a variable, passed as a parameter, or returned from a method.
+```
+my_proc = Proc.new { |x| x * 2 }
+puts my_proc.call(3) # Output: 6
+```
 
 #### Lambdas
+- similar to a proc in that it's a block of code that can be assigned to a variable, passed around, and called a method.
+- lambdas have a stricter argument count and behavior when it comes to returning from the enclosing method.
+```
+my_lambda = lambda { |x| x * 2 }
+puts my_lambda.call(3) # Output: 6
+```
+
+#### Procs vs Lambdas
+- Lambdas require a strict number of arguments, while procs are more lenient. If you pass the wrong number of arguments to a lambda, it will raise an error, while a proc may not.
+- In Lambda, `return` exits the lambda itself, while in a proc, it exits the enclosing method.
+- Lambdas capture the current scope, while procs capture the local scope of their creation.
+
+In this example, the return from the proc exits the method itself, while the return from the lambda only exits the lambda and the method continues executing.
+```
+def my_method
+  my_proc = Proc.new { return "Proc" }
+  my_lambda = lambda { return "Lambda" }
+  my_proc.call
+  my_lambda.call
+  "End of method"
+end
+
+puts my_method # Output: "Proc"
+```
 
 ## Ruby Engines
 https://guides.rubyonrails.org/engines.html
 
-To create a Rails engine, you can use the rails plugin new command, and it will generate the necessary directory structure for an engine. You can then build your engine's functionality in a way that is similar to building a regular Rails application.
+To create a Rails engine, you can use the Rails plugin's new command, and it will generate the necessary directory structure for an engine. You can then build your engine's functionality in a way that is similar to building a regular Rails application.
 
 ```ruby
 rails plugin new my_engine
 ```
-
 
 ## Skinny-Fat Controller and Model
 https://dev.to/kputra/rails-skinny-controller-skinny-model-5f2k#phase-3
@@ -106,4 +143,109 @@ class MyClass
 end
 
 MyClass.some_class_method # This will work
+```
+
+## Modify Array
+```ruby
+def modify_item(item)
+  return item # modify here
+end
+```
+
+1. `each_with_index` Method for In-Place Modification:
+```ruby
+original_array.each_with_index do |item, index|
+  modified_item = modify_item(item)
+  original_array[index] = modified_item
+end
+```
+
+2. `map!` Method for Transformation:
+```ruby
+original_array.map! do |item|
+  modify_item(item)
+end
+```
+
+3. `map` Method for a New Array:
+```ruby
+modified_array = original_array.map do |item|
+  modify_item(item)
+end
+```
+
+#### `each` Method
+modifying the item here won't affect the original array
+```ruby
+original_array.each do |item|
+  # This block is executed for each element in the array
+  # However, modifying item here won't affect the original array
+end
+```
+
+#### freeze/unfreeze Array
+can not modify the frozen array, this way to unfreeze the array
+```ruby
+frozen_array = [1, 2, 3].freeze
+duplicated_unfreeze_array = frozen_array.dup
+duplicated_unfreeze_array << 4
+puts frozen_array  # Output: [1, 2, 3]
+puts duplicated_unfreeze_array  # Output: [1, 2, 3, 4]
+```
+
+
+## Shallow Copy Deep Copy
+#### Shallow Copy
+1. dup
+```ruby
+shallow_copy = original_array.dup
+```
+2. clone
+```ruby
+shallow_copy = original_array.clone
+```
+3. Array.new
+```ruby
+shallow_copy = Array.new(original_array)
+```
+4. to_a
+```ruby
+shallow_copy = original_array.to_a
+```
+5. splat operator (*)
+```ruby
+shallow_copy = *original_array
+```
+
+#### Deep Copy
+1. json
+```ruby
+origin_array = [1, 2, 3]
+copy_array = JSON.parse(origin_array.to_json)
+copy_array << 4
+puts origin_array  # Output: [1, 2, 3]
+puts copy_array  # Output: [1, 2, 3, 4]
+```
+2. Marshal.load(Marshal.dump(@object))
+```ruby
+def deep_copy(obj)
+  Marshal.load(Marshal.dump(obj))
+end
+```
+3. deep_copy()
+```ruby
+def deep_copy(obj)
+  if obj.is_a?(Array)
+    obj.map { |element| deep_copy(element) }
+  elsif obj.is_a?(Hash)
+    obj.each_with_object({}) { |(key, value), hash| hash[deep_copy(key)] = deep_copy(value) }
+  else
+    obj.dup
+  end
+end
+```
+```ruby
+def deep_copy(obj)
+  obj.map { |element| element.is_a?(Array) ? deep_copy(element) : element.dup }
+end
 ```
