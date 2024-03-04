@@ -26,7 +26,7 @@ end
 ```
 
 #### Procs
-- an object that encapsulates a block of code and can be assigned to a variable, passed as a parameter, or returned from a method.
+- an object that encapsulates a block of code and can be assigned to a variable, passed as a parameter or returned from a method.
 ```
 my_proc = Proc.new { |x| x * 2 }
 puts my_proc.call(3) # Output: 6
@@ -34,7 +34,7 @@ puts my_proc.call(3) # Output: 6
 
 #### Lambdas
 - similar to a proc in that it's a block of code that can be assigned to a variable, passed around, and called a method.
-- lambdas have a stricter argument count and behavior when it comes to returning from the enclosing method.
+- a lambda expression is used to simplify the syntax of anonymous methods
 ```
 my_lambda = lambda { |x| x * 2 }
 puts my_lambda.call(3) # Output: 6
